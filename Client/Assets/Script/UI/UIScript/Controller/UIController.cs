@@ -2,16 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class UIController : MonoBehaviour 
+public class UIController :MonoBehaviourSingleton<UIController> 
 {
     public static UIController Instance { get; private set; }
 
     private Dictionary<UIPanelType, PanelBase> m_OpenedPanelDic = new Dictionary<UIPanelType, PanelBase>();
 
     #region monoBehaviour methods
-    void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
     }
     #endregion
 

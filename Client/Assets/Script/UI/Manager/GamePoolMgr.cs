@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-public sealed class GamePoolMgr: MonoBehaviour
+public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
 {
-    public static GamePoolMgr Instance { get; private set; }
     private Transform m_Transfrom;
     private Dictionary<UIPanelType,string >  m_PanelAssetDic=new Dictionary<UIPanelType,string> ();         //PanelType,Path
     private Dictionary<string ,UnityEngine.Object> m_AssetDic=new Dictionary<string,UnityEngine.Object> ();     //Path,Object
 
     #region monoBehaviour methods
-    void Awake()
+    protected override void Awake()
     {
-        Instance=this;  
+        base.Awake();
         this.m_Transfrom = this.transform;
         this.RegisiterPane();
     }
