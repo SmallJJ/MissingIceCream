@@ -24,4 +24,19 @@
     /// 受伤
     /// </summary>
     void Hurt(int damage);
+
+    /// <summary>
+    /// 吃东西
+    /// </summary>
+    void Eat();
+
+    /// <summary>
+    /// 是否有食物
+    /// </summary>
+    bool HasFood();
+
+    /// <summary>
+    /// 是否有目标位置
+    /// </summary>
+    bool HasPosTarget();
 }

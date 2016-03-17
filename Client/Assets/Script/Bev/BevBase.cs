@@ -3,6 +3,16 @@ using DG.Tweening;
 
 public abstract class BevBase:ComponentBase,IBev
 {
+    /// <summary>
+    /// 状态机
+    /// </summary>
+    public StateMachine StateMachine { get; private set; }
+
+    /// <summary>
+    /// 是否死亡
+    /// </summary>
+    public bool IsDead { get; private set; }
+
     #region IBevInterface methods
     public void Idle()
     {
@@ -28,5 +38,20 @@ public abstract class BevBase:ComponentBase,IBev
     {
         throw new NotImplementedException();
     }
+
+    public bool HasFood()
+    {
+        throw new NotImplementedException();
+    }
+    public bool HasPosTarget()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Eat()
+    {
+        throw new NotImplementedException();
+    }
     #endregion
+
 }
