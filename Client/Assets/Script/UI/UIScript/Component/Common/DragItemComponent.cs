@@ -28,18 +28,16 @@ public class DragItemComponent:ComponentBase
     {
         if(go.Equals(this.gameObject))
         {
-             Vector3 pos=Camera.main.ScreenToWorldPoint(Input.mousePosition);
-#if UNITY_Editer
-
-             pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-#elif And
+            Vector3 pos=Vector3.zero;
+#if UNITY_EDITOR
+             pos =Input.mousePosition;
+#elif UNITY_ANDROID
+             pos = Input.touches[0].position;
+#endif
+             pos = Camera.main.ScreenToWorldPoint(pos);
              this.MyTransform.position = new Vector3(pos.x, pos.y, this.MyTransform.position.z);
         }
     }
 
-    private void CloneGo()
-    {
- 
-    }
     #endregion
 }
