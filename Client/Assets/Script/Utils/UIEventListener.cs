@@ -55,7 +55,6 @@ public class UIEventListener : EventTrigger
         if (onHover != null) onHover(gameObject,true);
     }
 
-
     //退出
     public override void OnPointerExit(PointerEventData eventData)
     {
