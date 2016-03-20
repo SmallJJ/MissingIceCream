@@ -4,10 +4,7 @@ using System.Collections.Generic;
 
 public class UIController :MonoBehaviourSingleton<UIController> 
 {
-    public static UIController Instance { get; private set; }
-
     private Dictionary<UIPanelType, PanelBase> m_OpenedPanelDic = new Dictionary<UIPanelType, PanelBase>();
-
     #region monoBehaviour methods
     protected override void Awake()
     {
