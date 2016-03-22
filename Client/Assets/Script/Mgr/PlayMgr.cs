@@ -2,9 +2,15 @@
 {
     #region MonoBehaviour methods
 
-    void Awake()
+    void Start()
     {
- 
+        UIController.Instance.OpenPanel(UIPanelType.LevelEditerPanel);
     }
+
+    protected override void Awake()
+    {
+        
+    }
+
     #endregion
 }

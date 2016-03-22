@@ -288,7 +288,8 @@ public static class StringUtils
 
     public static string GetFileStr(string path)
     {
-        TextAsset textAsset = Resources.Load(path) as TextAsset;
+        TextAsset textAsset = Resources.Load(path,typeof(TextAsset)) as TextAsset;
+        Debug.Log(textAsset);
         if (textAsset == null)
         {
             Debug.LogError(path + " is not exist");
@@ -301,16 +302,9 @@ public static class StringUtils
         return GetFileStr(path).Split(splitChar);
     }
 
-    public static void DebugResponse(Dictionary<byte, object> hashtable)
-    {
-        foreach (KeyValuePair<byte, object> kv in hashtable)
-        {
-            Debug.Log("key : "+ kv.Key +"  value : "+kv.Value);
-        }
-    }
-
     public static void UpdateLabel(this Text label, string str)
     {
+        Debug.Log(str);
         label.text = str.Replace("\\n", "\n"); ;
     }
 }

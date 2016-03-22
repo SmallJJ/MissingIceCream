@@ -21,14 +21,14 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviourSi
 
         if (instances.Length > 1)
         {
-            Debug.LogError("有多个单例: " + typeof(T) + ",返回第一个发现的");
+            Debug.Log("有多个单例: " + typeof(T) + ",返回第一个发现的");
         }
         return instances[0];
     }
 
     protected virtual void Awake()
     {
-        if (m_instance) Debug.LogError("已存在一个单例类的实例: " + typeof(T) + ",你不应该再创建它");
+        if (m_instance) Debug.Log("已存在一个单例类的实例: " + typeof(T) + ",你不应该再创建它");
         else m_instance = this as T;
     }
 }

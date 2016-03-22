@@ -1,0 +1,3 @@
+RoleType.IceCream =IceCream
+RoleType.Prop = Prop
+RoleType.Marterial = Marterial

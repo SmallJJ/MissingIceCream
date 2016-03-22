@@ -1,14 +1,18 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 public class PropItemComponent : ComponentBase
 {
-    public Image IconImage;
+    public Image iconImage;
     public Text NameText;
 
     #region private methods
 
     private void UpdateIcon(string IconStr)
     {
-        this.IconImage.name = IconStr;
+        
+        Sprite sprite= GamePoolMgr.Instance.GetSprite(PathConst.Icon + IconStr);
+        if(sprite==null) print(IconStr+"   "+ (PathConst.Icon + IconStr));
+        this.iconImage.sprite = sprite;
     }
 
     private void UpdateName(string nameText)

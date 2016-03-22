@@ -10,7 +10,6 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     #region monoBehaviour methods
     protected override void Awake()
     {
-        base.Awake();
         this.m_Transfrom = this.transform;
         this.RegisiterPane();
     }
@@ -19,28 +18,25 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     #region private methods
     private void RegisiterPane()
     {
-        //loginPanel
-        this.RegisiterPanelForLogin(UIPanelType.LoginPanel);
+        //ForLogin
 
+        //ForEditer
+        this.RegisiterPanelForEditer(UIPanelType.LevelEditerPanel);
 
+        //ForMain
     }
     private void RegisiterPanelForLogin(UIPanelType type)
     {
-        this.RegisiterPanelAsset(type, PathsConst.Panel_Login + type);
+        this.RegisiterPanelAsset(type, PathConst.Panel_Login + type);
     }
     private void RegisiterPanelForMain(UIPanelType type)
     {
-        this.RegisiterPanelAsset(type, PathsConst.Panel_Main + type);
+        this.RegisiterPanelAsset(type, PathConst.Panel_Main + type);
     }
 
-    private void RegisiterPanelForFight(UIPanelType type)
+    private void RegisiterPanelForEditer(UIPanelType type)
     {
-        this.RegisiterPanelAsset(type, PathsConst.Panel_Fight + type);
-    }
-
-    private void RegisiterPanelForCommon(UIPanelType type)
-    {
-        this.RegisiterPanelAsset(type, PathsConst.Component_Common + type);
+        this.RegisiterPanelAsset(type, PathConst.Panel_LevelEditer + type);
     }
 
     private void RegisiterPanelAsset(UIPanelType type,string path)
@@ -56,7 +52,7 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    private UnityEngine.Object Get(string path)
+    private UnityEngine.Object Get(string path,Type type)
     {
         if(string.IsNullOrEmpty(path))
         {
@@ -69,7 +65,7 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
             this.m_AssetDic.TryGetValue(path,out obj);
             if(obj==null)
             {
-                obj=this.Load(path);
+                obj=this.Load(path, type);
                 if(obj!=null)
                   this.Add(path,obj);
             }
@@ -87,9 +83,9 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    private UnityEngine.Object Load(string path)
+    private UnityEngine.Object Load(string path,Type type)
     {
-        UnityEngine.Object obj=Resources.Load(path);
+        UnityEngine.Object obj=Resources.Load(path, type);
         if(obj==null)
             Debug.Log("Can't find asset +"+path);
             return obj;
@@ -110,9 +106,9 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    public Texture2D GetTexture2d(string path)
+    public Sprite GetSprite(string path)
     {
-        return  this.Get(path) as Texture2D;
+        return  this.Get(path,typeof(Sprite)) as Sprite;
     }
 
     /// <summary>
@@ -122,7 +118,7 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     /// <returns></returns>
     public GameObject GetPrefab(string path)
     {
-        return this.Get(path) as GameObject;
+        return this.Get(path,typeof(GameObject)) as GameObject;
     }
 
     /// <summary>

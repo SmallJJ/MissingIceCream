@@ -2,6 +2,9 @@
     public enum UIPanelType
     {
         None,
-        LoginPanel,
-        RegionPanel
+
+        /// <summary>
+        /// 关卡编辑界面
+        /// </summary>
+        LevelEditerPanel,
     }

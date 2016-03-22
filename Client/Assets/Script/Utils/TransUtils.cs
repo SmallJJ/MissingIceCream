@@ -22,13 +22,30 @@ public sealed class TransUtils
         if (prefab != null)
         {
             Transform clone = UnityEngine.Object.Instantiate(prefab) as Transform;
-            clone.parent = parent;
+            clone.SetParent(parent);
             clone.localPosition = Vector3.zero;
             clone.localRotation = Quaternion.identity;
             clone.localScale = scale;
             return clone;
         }
         return null;
+    }
+
+    public static void EnableCollider(Transform trans,bool isEnable)
+    {
+        if (trans != null)
+        {
+            BoxCollider2D boxCollider2D = trans.GetComponent<BoxCollider2D>();
+            if (boxCollider2D != null)
+            {
+                boxCollider2D.enabled = isEnable;
+            }
+            Collider collider = trans.GetComponent<Collider>();
+            if (collider != null)
+            {
+                collider.enabled = isEnable;
+            }
+        }
     }
 
 }

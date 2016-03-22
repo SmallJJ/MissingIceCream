@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
+[RequireComponent(typeof(RectTransform))]
 public abstract class PanelBase : UIBase, IPanel
 {
     public UIPanelType ThisPanel { get; protected set; }

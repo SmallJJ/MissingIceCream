@@ -90,11 +90,13 @@ public abstract class PackageComponentBase : ComponentBase
     /// <param name="go"></param>
     protected void InPackageItemClick(GameObject go)
     {
-        ComponentBase comp = go.GetComponent<ComponentBase>();
         if (this.ClickType == PackageItemClickType.CantClick) return;
+        ComponentBase comp = go.GetComponent<ComponentBase>();
         if (this.ClickType == PackageItemClickType.OnceClick && this.backupSelectionItem == comp) return;
+        this.backupSelectionItem = comp;
         this.ShowSelectionEffect(comp);
         this.ItemClick(comp);
+
     }
 
     /// <summary>
@@ -156,10 +158,13 @@ public abstract class PackageComponentBase : ComponentBase
     /// <param name="trans"></param>
     private void ShowSelectionEffect(ComponentBase comp)
     {
-        this.SelectionEffect.transform.parent = comp.MyTransform;
-        this.SelectionEffect.transform.localPosition = Vector3.zero;
-        this.SelectionEffect.transform.localScale = Vector3.one;
-        this.SelectionEffect.SetActive(true);
+        if (this.SelectionEffect != null)
+        {
+            this.SelectionEffect.transform.parent = comp.MyTransform;
+            this.SelectionEffect.transform.localPosition = Vector3.zero;
+            this.SelectionEffect.transform.localScale = Vector3.one;
+            this.SelectionEffect.SetActive(true);
+        }
     }
 
     private IEnumerator SelectionItemByIndexInspector(int index)

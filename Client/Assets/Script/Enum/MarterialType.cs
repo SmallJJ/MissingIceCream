@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public enum MarterialType
+﻿public enum MarterialType
 {
     /// <summary>
     /// 巧克力

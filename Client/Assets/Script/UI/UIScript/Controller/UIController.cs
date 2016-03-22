@@ -4,18 +4,19 @@ using System.Collections.Generic;
 
 public class UIController :MonoBehaviourSingleton<UIController> 
 {
+    public Canvas UICanvas;
     private Dictionary<UIPanelType, PanelBase> m_OpenedPanelDic = new Dictionary<UIPanelType, PanelBase>();
+
     #region monoBehaviour methods
     protected override void Awake()
     {
-        base.Awake();
     }
     #endregion
 
     #region public methods
 
     #region OpenPanel
-    public void OpenPanel(UIPanelType type,PanelParamBase param)
+    public void OpenPanel(UIPanelType type,PanelParamBase param=null)
     {
         PanelBase panel = null;
         if (this.m_OpenedPanelDic.ContainsKey(type))
@@ -30,6 +31,7 @@ public class UIController :MonoBehaviourSingleton<UIController>
                 Debug.Log(type+" panel is null !");
                 return;
             }
+            panel.MyTransform.SetParent(this.UICanvas.transform);
             panel.MyTransform.localPosition = Vector3.zero;
             this.m_OpenedPanelDic.Add(type, panel);
         }

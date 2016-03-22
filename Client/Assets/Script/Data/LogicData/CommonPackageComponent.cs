@@ -36,7 +36,6 @@ public class CommonPackageComponent : PackageComponentBase
     public override void Clear()
     {
         this.ResetScrollView();
-        base.Clear();
         this.ClearReserved();
     }
 
@@ -120,26 +119,56 @@ public class CommonPackageComponent : PackageComponentBase
     #endregion
 
     #region public methods
-
-
-    public void UpdateIceCreamPackage(IceCreamData[] iceCreamDatas)
+    /// <summary>
+    /// 更新冰淇淋包裹
+    /// </summary>
+    /// <param name="iceCreamDatas"></param>
+    public void UpdateRoleItems(RoleDataBase[] roleDatas)
     {
-        if (iceCreamDatas != null && iceCreamDatas.Length > 0)
+        if (roleDatas != null && roleDatas.Length > 0)
         {
-            this.StartCoroutine(this.UpdateIceCreamPackageIterator(iceCreamDatas));
+            this.StartCoroutine(this.UpdateIceCreamPackageIterator(roleDatas));
         }
     }
 
-    private IEnumerator UpdateIceCreamPackageIterator(IceCreamData[] iceCreamDatas)
+    private IEnumerator UpdateIceCreamPackageIterator(RoleDataBase[] roleDatas)
     {
         this.StartUpdatePackage();
-        for (int i = 0; i < iceCreamDatas.Length; i++)
+        this.Clear();
+        for (int i = 0; i < roleDatas.Length; i++)
         {
             PropItemComponent propItem = this.InstantiateItem<PropItemComponent>(i);
-            propItem.UpdateData(iceCreamDatas[i]);
+            propItem.UpdateData(roleDatas[i]);
         }
         yield return null;
         this.FinishUpdatePackage();
     }
+
+
+    /// <summary>
+    /// 更新角色类型包裹
+    /// </summary>
+    /// <param name="roleTypeArray"></param>
+    public void UpdateRoleType(Array roleTypeArray)
+    {
+        if (roleTypeArray != null && roleTypeArray.Length > 0)
+        {
+            this.StartCoroutine(this.UpdateRoleTypeIterator(roleTypeArray));
+        }
+    }
+
+    private IEnumerator UpdateRoleTypeIterator(Array roleTypeArray)
+    {
+        this.StartUpdatePackage();
+        base.Clear();
+        for (int i = 0; i < roleTypeArray.Length; i++)
+        {
+           RoleTypeComponent roleTypeComp = this.InstantiateItem<RoleTypeComponent>(i);
+            roleTypeComp.UpdateInfo((RoleType)roleTypeArray.GetValue(i));
+        }
+        yield return null;
+        this.FinishUpdatePackage();
+    }
+
     #endregion
 }
