@@ -33,6 +33,7 @@ public class UIController :MonoBehaviourSingleton<UIController>
             }
             panel.MyTransform.SetParent(this.UICanvas.transform);
             panel.MyTransform.localPosition = Vector3.zero;
+            panel.MyTransform.localScale = Vector3.one;
             this.m_OpenedPanelDic.Add(type, panel);
         }
         panel.Open(param,PanelEffectType.Open);
