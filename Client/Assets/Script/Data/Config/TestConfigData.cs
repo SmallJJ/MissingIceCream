@@ -1,4 +1,8 @@
 ﻿using System;
+
+/// <summary>
+/// 这个类只是测试用，到后边会配静态表
+/// </summary>
 public static class TestConfigData
 {
     private static IceCreamData[] m_IceCreamDatas;
@@ -21,16 +25,14 @@ public static class TestConfigData
             {
                 IceCreamType type = (IceCreamType)array.GetValue(i);
                 string name = "";
-                string asset = "";
+                string asset = type.ToString();
                 switch (type)
                 {
                     case IceCreamType.Red:
                         name = "红色冰淇淋";
-                        asset = "RedIceCream";
                         break;
                     case IceCreamType.Blue:
                         name = "蓝色冰淇淋";
-                        asset = "BlueIceCream";
                         break;
                 }
                 m_IceCreamDatas[i] = new IceCreamData() { Name= name, Asset= asset, Type= type};
@@ -53,44 +55,35 @@ public static class TestConfigData
             {
                 MarterialType type = (MarterialType)array.GetValue(i);
                 string name = "";
-                string asset = "";
+                string asset = type.ToString();
                 switch (type)
                 {
                     case MarterialType.Chocolate:
                         name = "巧克力";
-                        asset = "Other";
                         break;
                     case MarterialType.Corn:
                         name = "玉米";
-                        asset = "Other";
                         break;
                     case MarterialType.Ormosia:
                         name = "红豆";
-                        asset = "Other";
                         break;
                     case MarterialType.MungBean:
                         name = "绿豆";
-                        asset = "Other";
                         break;
                     case MarterialType.Peanut:
                         name = "花生";
-                        asset = "Other";
                         break;
                     case MarterialType.Egusi:
                         name = "瓜子";
-                        asset = "Other";
                         break;
                     case MarterialType.Filbert:
                         name = "榛子";
-                        asset = "Other";
                         break;
                     case MarterialType.Raisin:
                         name = "葡萄干";
-                        asset = "Other";
                         break;
                     case MarterialType.Freezer:
                         name = "冰箱";
-                        asset = "Other";
                         break;
                 }
                 m_MaterialDatas[i] = new MaterialData() { Name = name, Asset = asset, Type = type };
@@ -113,36 +106,29 @@ public static class TestConfigData
             {
                 PropType type = (PropType)array.GetValue(i);
                 string name = "";
-                string asset = "";
+                string asset = type.ToString();
                 switch (type)
                 {
                     case PropType.Converter:
                         name = "转换器";
-                        asset = "Other";
                         break;
                     case PropType.OnOf:
                         name = "重力开关";
-                        asset = "Other";
                         break;
                     case PropType.Door:
                         name = "门";
-                        asset = "Other";
                         break;
                     case PropType.CoolAir:
                         name = "冷气";
-                        asset = "Other";
                         break;
                     case PropType.Stove:
                         name = "火炉";
-                        asset = "Other";
                         break;
                     case PropType.StayWarm:
                         name = "保温罩";
-                        asset = "Other";
                         break;
                     case PropType.Quickness:
                         name = "急速";
-                        asset = "Other";
                         break;
                 }
 

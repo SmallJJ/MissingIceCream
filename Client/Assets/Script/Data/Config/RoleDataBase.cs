@@ -13,6 +13,11 @@ public abstract class RoleDataBase
     public string Asset { get; set; }
 
     /// <summary>
+    /// 描述
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// 角色所在的格子
     /// </summary>
     public PathFindingGrid Gird { get; set; }
