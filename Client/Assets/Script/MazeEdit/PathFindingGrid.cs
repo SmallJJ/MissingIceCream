@@ -221,5 +221,10 @@ public class PathFindingGrid
         return newStartGrids;
     }
 
+    public bool IsTest()
+    {
+        return this.x > 0;
+    }
+
     #endregion
 }

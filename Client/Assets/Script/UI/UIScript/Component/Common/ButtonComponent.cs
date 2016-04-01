@@ -13,12 +13,22 @@ public class ButtonComponent : ComponentBase {
     public Image DisabledImage;
     public Image SelectedImage;
     public Image ClickedImage;
+    public bool ScaleBtn=true;
     public ButtonStatusType ButtonStatus;
 
     public Action ClickEvent;
     public Action PressEvent;
 
+    private BtnScaleEffect m_BtnScaleEffect;
+
     #region override methods
+
+    protected override void Awake()
+    {
+        base.Awake();
+        this.HideAllSprite();
+        this.Normal();
+    }
     protected override void AddEvent()
     {
         base.AddEvent();
@@ -38,7 +48,8 @@ public class ButtonComponent : ComponentBase {
     private void InClick(GameObject go)
     {
         if (this.ClickEvent == null)
-        {
+        { 
+            UIController.Instance.ShowTip("CommonButton.Tip");
             return;
         }
         this.ClickEvent();
@@ -46,17 +57,30 @@ public class ButtonComponent : ComponentBase {
 
     private void InPress(GameObject go, bool isPress)
     {
+        if (this.ScaleBtn)
+        {
+            if (this.m_BtnScaleEffect == null)
+            {
+                this.m_BtnScaleEffect = this.MyGameObject.AddComponent<BtnScaleEffect>();
+            }
+            this.m_BtnScaleEffect.Play(isPress);
+        }
         this.Press(isPress);
+        if (this.PressEvent == null)
+        {
+            return;
+        }
+        this.PressEvent();
     }
 
-    private void Enable()
+    private void Normal()
     {
         if (this.NormalImage != null)
             this.NormalImage.gameObject.SetActive(true);
         TransUtils.EnableCollider(this.MyTransform, true);
     }
 
-    private void UnEnable()
+    private void Desabled()
     {
         if (this.DisabledImage != null)
             this.DisabledImage.gameObject.SetActive(true);
@@ -164,9 +188,9 @@ public class ButtonComponent : ComponentBase {
         this.HideAllSprite();
         switch (state)
         {
-            case ButtonStatusType.Normal: this.Enable(); break;
+            case ButtonStatusType.Normal: this.Normal(); break;
             case ButtonStatusType.Pressed: this.Press(param); break;
-            case ButtonStatusType.Disabled: this.UnEnable(); break;
+            case ButtonStatusType.Disabled: this.Desabled(); break;
             case ButtonStatusType.Selected: this.Selected(); break;
             case ButtonStatusType.Clicked: this.Clicked(); break;
         }

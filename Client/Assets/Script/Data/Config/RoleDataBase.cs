@@ -18,7 +18,12 @@ public abstract class RoleDataBase
     public string Description { get; set; }
 
     /// <summary>
-    /// 角色所在的格子
+    /// 角色基础类型
     /// </summary>
-    public PathFindingGrid Gird { get; set; }
+    public RoleType BaseType { get; set; }
+
+    /// <summary>
+    /// 通过这个数据结构定位到准确的数据类型
+    /// </summary>
+    public GridData GridData { get; set;}
 }

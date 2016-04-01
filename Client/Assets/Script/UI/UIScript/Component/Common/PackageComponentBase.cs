@@ -11,11 +11,13 @@ using UnityEngine.UI;
 public abstract class PackageComponentBase : ComponentBase
 {
     public LayoutGroup LayoutGroup; //布局组件（水平，垂直，格子布局）
+    public Transform ItemParent; 
     public ScrollRect ScrollRect;   //滑动组件
     public RectMask2D RectMask; //裁切组件
     public PackageItemClickType ClickType; //点击类型
     public int ImmediatelyShowCount;       //打开面板时，立即必须就看到的格子数量
     public bool IsAutoResetScrollView = true; //自动重置ScrollRect 在每次更新包裹以后
+    public bool ScaleItem = true;
     public GameObject SelectionEffect;
     public List<ComponentBase> CurrentItemList { get; private set; }
     public abstract event Action<ComponentBase> ItemClickEvent; //点击Item事件
@@ -43,7 +45,7 @@ public abstract class PackageComponentBase : ComponentBase
         StopAllCoroutines();
         foreach (ComponentBase item in this.CurrentItemList)
         {
-            DestroyImmediate(item.MyGameObject);
+            item.Hide();
         }
         this.backupSelectionItem = null;
         this.HideSelectionEffect();
@@ -106,6 +108,12 @@ public abstract class PackageComponentBase : ComponentBase
     /// <param name="isPress"></param>
     protected void InPackageItemPress(GameObject go, bool isPress)
     {
+        if (this.ScaleItem)
+        {
+            BtnScaleEffect effect = go.GetComponent<BtnScaleEffect>();
+            if(effect == null) effect = go.AddComponent<BtnScaleEffect>();
+            effect.Play(isPress);
+        }
         ComponentBase comp = go.GetComponent<ComponentBase>();
         this.ItemPress(comp, isPress);
     }
@@ -156,13 +164,14 @@ public abstract class PackageComponentBase : ComponentBase
     /// 显示选中特效
     /// </summary>
     /// <param name="trans"></param>
-    private void ShowSelectionEffect(ComponentBase comp)
+    public void ShowSelectionEffect(ComponentBase comp)
     {
         if (this.SelectionEffect != null)
         {
-            this.SelectionEffect.transform.parent = comp.MyTransform;
+            this.SelectionEffect.transform.SetParent(comp.transform);
             this.SelectionEffect.transform.localPosition = Vector3.zero;
             this.SelectionEffect.transform.localScale = Vector3.one;
+            this.SelectionEffect.transform.SetAsLastSibling();
             this.SelectionEffect.SetActive(true);
         }
     }
@@ -181,7 +190,7 @@ public abstract class PackageComponentBase : ComponentBase
     {
         if (index>=0 && index < this.CurrentItemList.Count)
         {
-            this.InPackageItemClick(this.CurrentItemList[index].gameObject);
+            this.InPackageItemClick(this.CurrentItemList[index].MyGameObject);
             return true;
         }
         return false;
@@ -281,19 +290,6 @@ public abstract class PackageComponentBase : ComponentBase
         }
     }
 
-    /// <summary>
-    /// 显示选中特效
-    /// </summary>
-    public void ShowSelection(ComponentBase comp)
-    {
-        if (this.SelectionEffect != null)
-        {
-            this.SelectionEffect.transform.parent = comp.MyTransform;
-            this.SelectionEffect.transform.localPosition = Vector3.zero;
-            this.SelectionEffect.transform.localScale = Vector3.one;
-            this.SelectionEffect.SetActive(true);
-        }
-    }
 
     /// <summary>
     /// 隐藏选中特效
@@ -365,12 +361,12 @@ public abstract class PackageComponentBase : ComponentBase
     /// 通过UID选中
     /// </summary>
     /// <param name="UID"></param>
-    public void SelectionItemByUID(long UID)
+    public void SelectionItemByUID(string UID)
     {
         StartCoroutine(this.SelectionItemIterator(UID));
     }
 
-    private IEnumerator SelectionItemIterator(long UID)
+    private IEnumerator SelectionItemIterator(string UID)
     {
         while (this.IsUpdating)
         {
@@ -410,6 +406,18 @@ public abstract class PackageComponentBase : ComponentBase
         foreach (ComponentBase item in this.CurrentItemList)
         {
             if (((IID)item).GetID() == id)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public ComponentBase GetItemByUID(string uid)
+    {
+        foreach (ComponentBase item in this.CurrentItemList)
+        {
+            if (((IUID)item).GetUID() == uid)
             {
                 return item;
             }

@@ -1,5 +1,5 @@
 ﻿public interface IPanel
 {
-    void Open(PanelParamBase prarm, PanelEffectType type);
-    void Close(PanelEffectType type);
+    void Open(UIPanelType type,PanelParamBase prarm, PanelEffectType effectType);
+    void Close(PanelEffectType effectType);
 }

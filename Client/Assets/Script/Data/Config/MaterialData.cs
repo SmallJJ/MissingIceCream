@@ -9,5 +9,19 @@ public  class MaterialData : RoleDataBase
     /// <summary>
     /// 物品类型
     /// </summary>
-    public MarterialType Type { get; set; }
+    private MaterialType m_Type;
+
+    public MaterialType Type
+    {
+        get
+        {
+            return this.m_Type;
+        }
+        set
+        {
+            base.BaseType = RoleType.Prop;
+            base.GridData = new GridData(value);
+            this.m_Type = value;
+        }
+    }
 }

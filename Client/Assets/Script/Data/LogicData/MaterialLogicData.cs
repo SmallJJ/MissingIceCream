@@ -10,5 +10,5 @@ public class MaterialLogicData:RoleLogicDataBase
     /// <summary>
     /// 物品类型
     /// </summary>
-    public MarterialType Type { get { return this.m_Data.Type;} }
+    public MaterialType Type { get { return this.m_Data.Type;} }
 }

@@ -6,7 +6,6 @@ public class RoleLogicDataBase
     {
         this.m_Data = data;
         this.Asset = data.Asset;
-        this.Gird = data.Gird;
     }
 
     /// <summary>
@@ -19,16 +18,19 @@ public class RoleLogicDataBase
     /// </summary>
     public string Asset { get;private set;}
 
-    /// <summary>
-    /// 角色所在的格子
-    /// </summary>
-    public PathFindingGrid Gird { get; private set;} 
+    
 
     #region public methods
 
-    public void UpdateGird(PathFindingGrid grid)
+    public void UpdateData(RoleDataBase data)
     {
-        this.Gird = Gird;
+        this.m_Data = data;
+        this.Asset = data.Asset;
+    }
+
+    public void UpdatePos(byte x, byte y)
+    {
+
     }
 
     public void UpdateAsset(string asset)

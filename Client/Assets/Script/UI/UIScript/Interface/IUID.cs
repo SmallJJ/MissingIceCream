@@ -1,4 +1,4 @@
 ﻿public interface IUID
 {
-    long GetUID();
+    string GetUID();
 }

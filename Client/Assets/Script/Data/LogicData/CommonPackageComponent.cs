@@ -81,7 +81,16 @@ public class CommonPackageComponent : PackageComponentBase
         }
         else
         {
-            comp = TransUtils.InstantiateTransform(this.ItemPrefab.MyTransform, base.LayoutGroup.transform).GetComponent<ComponentBase>();
+            Transform itemParent = this.MyTransform;
+            if (base.LayoutGroup != null)
+            {
+                itemParent = base.LayoutGroup.transform;
+            }
+            else if (base.ItemParent != null)
+            {
+                itemParent = base.ItemParent;
+            }
+            comp = TransUtils.InstantiateTransform(this.ItemPrefab.MyTransform, itemParent).GetComponent<ComponentBase>();
             base.AddCompEvent(comp);
             this.m_TotalItemList.Add(comp);
         }
@@ -120,13 +129,14 @@ public class CommonPackageComponent : PackageComponentBase
 
     #region public methods
     /// <summary>
-    /// 更新冰淇淋包裹
+    /// 更新角色组件包裹
     /// </summary>
     /// <param name="iceCreamDatas"></param>
     public void UpdateRoleItems(RoleDataBase[] roleDatas)
     {
         if (roleDatas != null && roleDatas.Length > 0)
         {
+            base.Clear();
             this.StartCoroutine(this.UpdateIceCreamPackageIterator(roleDatas));
         }
     }
@@ -134,7 +144,6 @@ public class CommonPackageComponent : PackageComponentBase
     private IEnumerator UpdateIceCreamPackageIterator(RoleDataBase[] roleDatas)
     {
         this.StartUpdatePackage();
-        this.Clear();
         for (int i = 0; i < roleDatas.Length; i++)
         {
             PropItemComponent propItem = this.InstantiateItem<PropItemComponent>(i);
@@ -153,6 +162,7 @@ public class CommonPackageComponent : PackageComponentBase
     {
         if (roleTypeArray != null && roleTypeArray.Length > 0)
         {
+            base.Clear();
             this.StartCoroutine(this.UpdateRoleTypeIterator(roleTypeArray));
         }
     }
@@ -160,15 +170,99 @@ public class CommonPackageComponent : PackageComponentBase
     private IEnumerator UpdateRoleTypeIterator(Array roleTypeArray)
     {
         this.StartUpdatePackage();
-        base.Clear();
         for (int i = 0; i < roleTypeArray.Length; i++)
         {
-           RoleTypeComponent roleTypeComp = this.InstantiateItem<RoleTypeComponent>(i);
-            roleTypeComp.UpdateInfo((RoleType)roleTypeArray.GetValue(i));
+            RoleTypeComponent roleTypeComp = this.InstantiateItem<RoleTypeComponent>(i);
+            roleTypeComp.UpdateInfo((UIRoleType)roleTypeArray.GetValue(i));
+            yield return null;
         }
-        yield return null;
         this.FinishUpdatePackage();
     }
 
+    /// <summary>
+    /// 更新关卡地图包裹
+    /// </summary>
+    public void UpdateLevelMapPackage(GridData[,] curLevelDatas, int gridWidth, int gridHeight)
+    {
+        if (curLevelDatas != null && curLevelDatas.Length > 0)
+        {
+            base.Clear();
+            this.StartCoroutine(this.UpdateLevelMapPackageIterator(curLevelDatas, gridWidth, gridHeight));
+        }
+    }
+
+    private IEnumerator UpdateLevelMapPackageIterator(GridData[,] curLevelDatas, int gridWidth, int gridHeight)
+    {
+        this.StartUpdatePackage();
+        int index = 0;
+        for (int row = 0; row < curLevelDatas.GetLength(0); row++)
+        {
+            for (int col = 0; col < curLevelDatas.GetLength(1); col++)
+            {
+                GridItemComponent comp = this.InstantiateItem<GridItemComponent>(index++);
+                comp.UpdateInfo(new GridLogicData(curLevelDatas[row,col]));
+                comp.MyTransform.localPosition = new Vector3(col * gridWidth, -row * gridHeight, 0);
+            }
+            yield return null;
+        }
+        this.FinishUpdatePackage();
+    }
+
+    /// <summary>
+    /// 更新关卡地图包裹
+    /// </summary>
+    public void UpdateLevelMapPackage(bool[,] mazeArray, int gridWidth, int gridHeight)
+    {
+        if (mazeArray != null && mazeArray.Length > 0)
+        {
+            base.Clear();
+            this.StartCoroutine(this.UpdateLevelMapPackageIterator(mazeArray, gridWidth, gridHeight));
+        }
+    }
+
+    private IEnumerator UpdateLevelMapPackageIterator(bool[,] mazeArray, int gridWidth, int gridHeight)
+    {
+        this.StartUpdatePackage();
+        GridData gridData = null;
+        GridLogicData gridLogicData = null;
+        int index = 0;
+        for (int row = 0; row < mazeArray.GetLength(0); row++)
+        {
+            for (int col = 0; col < mazeArray.GetLength(1); col++)
+            {
+                GridItemComponent comp = this.InstantiateItem<GridItemComponent>(index++);
+                RoadType type = mazeArray[row, col] ? RoadType.Wall : RoadType.Road;
+                gridData = new GridData(type);
+                gridData.SetPosition((byte)row, (byte)col);
+                gridLogicData = new GridLogicData(gridData);
+                comp.UpdateInfo(gridLogicData);
+                comp.MyTransform.localPosition = new Vector3(col * gridWidth, -row * gridHeight, 0);
+            }
+            yield return null;
+        }
+        this.FinishUpdatePackage();
+    }
+
+    public void UpdateLevelListPackge(Dictionary<string, string> LevelNames, Action<string, LevelOperationType> operationEvent)
+    {
+        if (LevelNames != null && LevelNames.Count > 0)
+        {
+            base.Clear();
+            this.StartCoroutine(this.UpdateLevelListPackgeIterator(LevelNames, operationEvent));
+        }
+    }
+
+    private IEnumerator UpdateLevelListPackgeIterator(Dictionary<string, string> levelNames, Action<string, LevelOperationType> operationEvent)
+    {
+        this.StartUpdatePackage();
+        int index = 0;
+        foreach ( KeyValuePair<string,string> kv in levelNames)
+        {
+            LevelInfoItemComponent comp = this.InstantiateItem<LevelInfoItemComponent>(index++);
+            comp.UpdateInfo(kv.Key,kv.Value, operationEvent);
+            yield return null;
+        }
+        this.FinishUpdatePackage();
+    }
     #endregion
 }

@@ -1,3 +1,55 @@
-﻿RoleType.IceCream =冰淇淋
-RoleType.Prop = 道具
-RoleType.Marterial = 物品
+﻿UIRoleType.IceCream =冰淇淋
+UIRoleType.Prop = 道具
+UIRoleType.Marterial = 物品
+UIRoleType.Wall = 墙壁
+UIRoleType.Ground = 地表
+
+Common.Button.Ensure = 确定
+Common.Button.Cancel = 取消
+Common.Button.Close =关闭
+Common.Button.Ok = 好的
+CommonButton.Tip =待开发中23333
+Common.Button.Save =保存
+Common.Button.Help = 帮助
+Common.Button.Edit = 编辑
+Common.Button.Del = 删除
+
+LevelSetingPanel.Input.Title=  关卡面板设置
+LevelSetingPanel.Input.DefaultLabel=  输入{0}-{1}以内的数
+LevelSetingPanel.Input.MapWidth=  地图列数
+LevelSetingPanel.Input.MapHeight=  地图行数
+LevelSetingPanel.Tip.IsEmpty = 行或列不可为空
+LevelSetingPanel.Tip.ColLimit = 列必须大于等于{0}，小于等于{1}
+LevelSetingPanel.Tip.RowLimit = 行必须大于等于{0}，小于等于{1}
+
+DialogPanel.Text.Tip =提示
+
+StartGamePanel.Button.StartGame = 开始游戏
+StartGamePanel.Button.LevelEdit =关卡编辑
+StartGamePanel.Button.About =关于
+
+LevelEditerPanel.Label.IceCreamCount =冰淇淋数量 {0}
+LevelEditerPanel.Label.PropCount =道具数量    {0}
+LevelEditerPanel.Label.MaterialCount =物品数量    {0}
+LevelEditerPanel.Label.FreezerCountLabel =冰箱数量    {0}
+LevelEditerPanel.Tip.IceCaremCountRange=冰淇淋数量应该大于0，并小于等于{0}
+LevelEditerPanel.Tip.FreezerCountRange=冰箱数量应该大于0，并小于等于{0}
+
+LevelEditerMgr.Tip.WallIsFixed = 围墙，不可操作 !
+LevelEditerMgr.Tip.FreezerCountLimit =冰箱的数量上限制！
+LevelEditerMgr.Tip.IceCreamCountLimit =冰淇淋的数量上限制！
+
+LevelListPanel.Label.Title = 关卡列表
+LevelListPanel.Button.CreateLevel = 新建关卡
+
+SaveLevelPanel.Label.Title = 保存关卡
+SaveLevelPanel.Input.LevelNameTitle = 关卡名
+SaveLevelPanel.DefaultLabel.LevelName = 20个字符以内
+SaveLevelPanel.Tip.LevelNameIsEmpty = 关卡名不能为空
+SaveLevelPanel.Tip.LevelNameIsExist = 此关卡名已存在
+
+EditerHelpPanel.Label.Help = 操作帮助面板
+EditerHelpPanel.Button.MainMenu = 主菜单
+EditerHelpPanel.Button.LevelList = 关卡列表
+
+

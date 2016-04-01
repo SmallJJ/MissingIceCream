@@ -18,12 +18,24 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     #region private methods
     private void RegisiterPane()
     {
+        //ForCommon
+        this.RegisiterPanelForCommon(UIPanelType.DialogPanel);
+
         //ForLogin
+        this.RegisiterPanelForLogin(UIPanelType.StartGamePanel);
 
         //ForEditer
+        this.RegisiterPanelForEditer(UIPanelType.LevelSetingPanel);
         this.RegisiterPanelForEditer(UIPanelType.LevelEditerPanel);
-
+        this.RegisiterPanelForEditer(UIPanelType.LevelListPanel);
+        this.RegisiterPanelForEditer(UIPanelType.SaveLevelPanel);
+        this.RegisiterPanelForEditer(UIPanelType.EditerHelpPanel);
         //ForMain
+    }
+
+    private void RegisiterPanelForCommon(UIPanelType type)
+    {
+        this.RegisiterPanelAsset(UIPanelType.DialogPanel, PathConst.Panel_Common + type);
     }
     private void RegisiterPanelForLogin(UIPanelType type)
     {
@@ -142,9 +154,10 @@ public sealed class GamePoolMgr : MonoBehaviourSingleton<GamePoolMgr>
     /// <typeparam name="T"></typeparam>
     /// <param name="path"></param>
     /// <returns></returns>
-    public T GetComponent<T>(string path) where T:ComponentBase
+    public T LoadComponent<T>(string path) where T:ComponentBase
     {
-        return this.GetPrefab(path).GetComponent<T>();
+        Transform trans= TransUtils.InstantiateTransform(this.GetPrefab(path).transform);
+        return trans.GetComponent<T>();
     }
 
     #endregion

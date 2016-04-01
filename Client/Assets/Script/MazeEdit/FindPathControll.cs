@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class FindPathControll : MonoBehaviour 
 {
-    public TestMaze TestMaze;
+    public MeshMgr TestMaze;
     public float Speed;
     public GameObject TargetArray;
     public LineRenderer m_LineRenderer;
@@ -38,16 +38,6 @@ public class FindPathControll : MonoBehaviour
             }
         }
 	}
-
-    void OnGUI()
-    {
-        if (GUI.Button(new Rect(20, 100, 120, 50), "CreateMaze"))
-        {
-            this.TestMaze.ClearMaze();
-            this.TestMaze.CreateMaze();
-            this.transform.position = new Vector3(1, 1, -1);
-        }
-    }
 
     #endregion
 

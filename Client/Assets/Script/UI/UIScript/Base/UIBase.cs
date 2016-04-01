@@ -32,7 +32,6 @@ public abstract class UIBase : MonoBehaviour,IUI
     /// <summary>
     /// 初始化
     /// 添加Init方法是为了增强鲁棒性、容错性
-    /// 然而这个函数并没有什么卵用（2015.05.23）
     /// </summary>
     public virtual void Init()
     {

@@ -8,22 +8,22 @@ public class RoleTypeComponent : ComponentBase
     public Image NormalImage;
     public LocalLabelComponent SelectedLocalLabel;
     public LocalLabelComponent NormalLocalLabel;
-    private RoleType m_RoleType;
+    private UIRoleType m_UIRoleType;
 
     #region private methods
 
     private void UpdateLabel()
     {
-        this.SelectedLocalLabel.UpdateLabel("RoleType." + this.m_RoleType);
-        this.NormalLocalLabel.UpdateLabel("RoleType." + this.m_RoleType);
+        this.SelectedLocalLabel.UpdateLabel("UIRoleType." + this.m_UIRoleType);
+        this.NormalLocalLabel.UpdateLabel("UIRoleType." + this.m_UIRoleType);
     }
     #endregion
 
     #region public methods
 
-    public void UpdateInfo(RoleType roleType)
+    public void UpdateInfo(UIRoleType uiRoleType)
     {
-        this.m_RoleType = roleType;
+        this.m_UIRoleType = uiRoleType;
         this.UpdateLabel();
         this.UnSeleted();
     }
@@ -40,9 +40,9 @@ public class RoleTypeComponent : ComponentBase
         this.SelectedImage.gameObject.SetActive(false);
     }
 
-    public RoleType GetRoleType()
+    public UIRoleType GetRoleType()
     {
-        return this.m_RoleType;
+        return this.m_UIRoleType;
     }
     #endregion
 

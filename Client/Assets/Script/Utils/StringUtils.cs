@@ -289,7 +289,6 @@ public static class StringUtils
     public static string GetFileStr(string path)
     {
         TextAsset textAsset = Resources.Load(path,typeof(TextAsset)) as TextAsset;
-        Debug.Log(textAsset);
         if (textAsset == null)
         {
             Debug.LogError(path + " is not exist");
@@ -304,7 +303,6 @@ public static class StringUtils
 
     public static void UpdateLabel(this Text label, string str)
     {
-        Debug.Log(str);
         label.text = str.Replace("\\n", "\n"); ;
     }
 }

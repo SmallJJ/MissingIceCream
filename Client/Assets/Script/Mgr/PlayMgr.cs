@@ -4,7 +4,8 @@
 
     void Start()
     {
-        UIController.Instance.OpenPanel(UIPanelType.LevelEditerPanel);
+        EasyTouch.instance.enabled = false;
+        UIController.Instance.OpenPanel(UIPanelType.StartGamePanel,null, PanelEffectType.None);
     }
 
     protected override void Awake()

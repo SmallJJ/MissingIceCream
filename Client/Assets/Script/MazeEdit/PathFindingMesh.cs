@@ -162,13 +162,13 @@ public class PathFindingMesh
     /// </summary>
     private void InstantiateGrids()
     {
-        for (int y = 0; y < this.m_Grids.GetLength(0); y++)
+        for (int row = 0; row < this.m_Grids.GetLength(0); row++)
         {
-            for (int x = 0; x < this.m_Grids.GetLength(1); x++)
+            for (int col = 0; col < this.m_Grids.GetLength(1); col++)
             {
-                this.m_Grids[y, x] = new PathFindingGrid();
-                this.m_Grids[y, x].X = x;
-                this.m_Grids[y, x].Y = y;
+                this.m_Grids[row, col] = new PathFindingGrid();
+                this.m_Grids[row, col].X = col;
+                this.m_Grids[row, col].Y = row;
             }
         }
     }
@@ -177,35 +177,35 @@ public class PathFindingMesh
     private void OrganizeGrids()
     {
         //把每个格子下方的格子(属性)设为下方的格子(第一行->倒数第二行)
-        for (int i = 0; i < this.m_Grids.GetLength(0)-1; i++)
+        for (int row = 0; row < this.m_Grids.GetLength(0)-1; row++)
         {
-            for (int j = 0; j < this.m_Grids.GetLength(1); j++)
+            for (int col = 0; col < this.m_Grids.GetLength(1); col++)
             {
-                this.m_Grids[i, j].BottomGrid = this.m_Grids[i+1, j];
+                this.m_Grids[row, col].BottomGrid = this.m_Grids[row+1, col];
             }
         }
         //把每个格子上方格子(属性)赋值为上方的格子(第二行->最后一行)
-        for (int i = 1; i < this.m_Grids.GetLength(0); i++)
+        for (int row = 1; row < this.m_Grids.GetLength(0); row++)
         {
-            for (int j = 0; j < this.m_Grids.GetLength(1); j++)
+            for (int col = 0; col < this.m_Grids.GetLength(1); col++)
             {
-                this.m_Grids[i, j].TopGrid = this.m_Grids[i-1, j];
+                this.m_Grids[row, col].TopGrid = this.m_Grids[row-1, col];
             }
         }
         //把每个格子右面的格子(属性)赋值为右边的格子(第一列->倒数第二列)
-        for (int i = 0; i < this.m_Grids.GetLength(0); i++)
+        for (int row = 0; row < this.m_Grids.GetLength(0); row++)
         {
-            for (int j = 0; j < this.m_Grids.GetLength(1)-1; j++)
+            for (int col = 0; col < this.m_Grids.GetLength(1)-1; col++)
             {
-                this.m_Grids[i, j].RightGrid = this.m_Grids[i, j+1];
+                this.m_Grids[row, col].RightGrid = this.m_Grids[row, col+1];
             }
         }
         //把每个格子左边的格子(属性)赋值为左边的格子(第二列->最后一列)
-        for (int i = 0; i < this.m_Grids.GetLength(0); i++)
+        for (int row = 0; row < this.m_Grids.GetLength(0); row++)
         {
-            for (int j = 1; j < this.m_Grids.GetLength(1); j++)
+            for (int col = 1; col < this.m_Grids.GetLength(1); col++)
             {
-                this.m_Grids[i, j].LeftGrid = this.m_Grids[i, j-1];
+                this.m_Grids[row, col].LeftGrid = this.m_Grids[row, col-1];
             }
         }
     }

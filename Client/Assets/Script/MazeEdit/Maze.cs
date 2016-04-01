@@ -14,12 +14,12 @@ public class Maze
     private System.Random random;
 
     #region public methods
-    public Maze(int width,int height)
+    public Maze(int rows, int cols)
     {
         //实例化随机种子
         random = new System.Random();
         //实例化房间
-        this.InitMaze(width, height);
+        this.InitMaze(rows, cols);
         //连接上下 左右的门
         this.JointDoor();
         //固定迷宫四周的门
@@ -36,6 +36,7 @@ public class Maze
     {
         return this.RoomToData();
     }
+
     #endregion
 
     #region private methods
@@ -43,20 +44,20 @@ public class Maze
     /// <summary>
     /// 实例化房间并把通路加到链路
     /// </summary>
-    /// <param name="width"></param>
-    /// <param name="height"></param>
-    private void InitMaze(int width,int height)
+    /// <param name="cols"></param>
+    /// <param name="rows"></param>
+    private void InitMaze(int rows,int cols)
     {
-        this.RoomMatrix = new Room[width, height];
+        this.RoomMatrix = new Room[rows,cols];
         this.AllRoads = new List<List<Room>>();
-        for (int i = 0; i < width; i++)
+        for (int row = 0; row < rows; row++)
         {
-            for (int j = 0; j < height; j++)
+            for (int col = 0; col < cols; col++)
             {
 				//开始每一个房间作为一条路
                 List<Room> road = new List<Room>();
-                this.RoomMatrix[i, j] = new Room();
-                road.Add(this.RoomMatrix[i, j]);
+                this.RoomMatrix[row,col] = new Room();
+                road.Add(this.RoomMatrix[row, col]);
 				//添加到所有通路
                 this.AllRoads.Add(road);
             }
@@ -69,19 +70,19 @@ public class Maze
     private void JointDoor()
     {
         //每个房间的下门和下面房间的上门公用一个门 
-        for (int i = 0; i < this.RoomMatrix.GetLength(0)-1; i++)    //一列  i
+        for (int row = 0; row < this.RoomMatrix.GetLength(0)-1; row++)   
         {
-            for (int j = 0; j < this.RoomMatrix.GetLength(1); j++)   //一行  j
+            for (int col = 0; col < this.RoomMatrix.GetLength(1); col++)  
             {
-                this.RoomMatrix[i, j].BottomDoor = this.RoomMatrix[i+1, j].TopDoor;  //当前列+1就是下面一个房间  
+                this.RoomMatrix[row, col].BottomDoor = this.RoomMatrix[row+1, col].TopDoor;   
             }
         }
         //每个房间的右门和右边房间的左门公用一个门 
-        for (int i = 0; i < this.RoomMatrix.GetLength(1)-1; i++)   //一行  i
+        for (int row = 0; row < this.RoomMatrix.GetLength(0); row++)
         {
-            for (int j = 0; j < this.RoomMatrix.GetLength(0); j++)   //一列 j
+            for (int col = 0; col < this.RoomMatrix.GetLength(1) - 1; col++)
             {
-                this.RoomMatrix[j,i].RightDoor = this.RoomMatrix[j,i+1].LeftDoor;   //当前行+1就是后面一个房间
+                this.RoomMatrix[row, col].RightDoor = this.RoomMatrix[row, col + 1].LeftDoor;
             }
         }
     }
@@ -244,14 +245,14 @@ public class Maze
         //将是房间的先填充为真
         this.SetOtherDoorFill(dataMatrix);
         // 遍历每个房间， 并将该房间的四个方向的门的开关状态映射到保存迷宫的数组中
-        for (int i = 0; i < this.RoomMatrix.GetLength(0); i++)
+        for (int row = 0; row < this.RoomMatrix.GetLength(0); row++)
         {
-            for (int j = 0; j < this.RoomMatrix.GetLength(1); j++)
+            for (int col = 0; col < this.RoomMatrix.GetLength(1); col++)
             {
-                this.SetData(dataMatrix,i,j,0,-1,this.RoomMatrix[i,j].LeftDoor.IsLocked);
-                this.SetData(dataMatrix, i, j, 0,1, this.RoomMatrix[i, j].RightDoor.IsLocked);
-                this.SetData(dataMatrix, i, j, -1, 0, this.RoomMatrix[i, j].TopDoor.IsLocked);      //因为2维数组,是行列的矩阵,从左上角为0,0坐标,所以Y坐标向上为-1,向下为+1
-                this.SetData(dataMatrix, i, j, 1, 0, this.RoomMatrix[i, j].BottomDoor.IsLocked);
+                this.SetData(dataMatrix,row,col,0,-1,this.RoomMatrix[row,col].LeftDoor.IsLocked);
+                this.SetData(dataMatrix, row, col, 0,1, this.RoomMatrix[row, col].RightDoor.IsLocked);
+                this.SetData(dataMatrix, row, col, -1, 0, this.RoomMatrix[row, col].TopDoor.IsLocked);      //因为2维数组,是行列的矩阵,从左上角为0,0坐标,所以Y坐标向上为-1,向下为+1
+                this.SetData(dataMatrix, row, col, 1, 0, this.RoomMatrix[row, col].BottomDoor.IsLocked);
             }
         }
         return dataMatrix;
