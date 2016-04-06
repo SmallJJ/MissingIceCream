@@ -175,13 +175,11 @@ public class LevelEditerPanel : PanelBase
         this.MaterialCountLabel.UpdateLabel("LevelEditerPanel.Label.MaterialCount", count);
     }
 
-
     private void UpdateFreezerCount(int count)
     {
         this.m_FreezerCount = count;
         this.FreezerCountLabel.UpdateLabel("LevelEditerPanel.Label.FreezerCountLabel", count);
     }
-
 
     private IEnumerator WaitPressIterator(ComponentBase comp)
     {
